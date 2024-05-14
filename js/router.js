@@ -1,13 +1,12 @@
 
 const routes = [
     { path: '/', view: 'home', protected: true },
-    { path: '/about', view: 'about', protected: true },
+    { path: '/users', view: 'users', protected: true },
     { path: '/login', view: 'login', protected: false },
 ];
 
 function router() {
     const path = window.location.hash.substring(1);
-
     const route = routes.find(r => r.path === path);
 
     if (route) {
@@ -17,7 +16,7 @@ function router() {
         } else {
             loadView(route.view);
         }
-        
+
     } else {
         loadView('not-found');
     }
@@ -28,16 +27,15 @@ function loadView(view) {
         case 'home':
             document.getElementById('content').innerHTML = getPage(view);
             break;
-        case 'about':
+        case 'users':
             document.getElementById('content').innerHTML = getPage(view);
             break;
         case 'login':
             document.getElementById('content').innerHTML = getPage(view);
             break;
         default:
-            document.getElementById('content').innerHTML = '<h2>Page Not Found</h2><p>The requested page does not exist.</p>';
+            document.getElementById('content').innerHTML = '<h2>Page Not Found</h2><p>La pagina solicitada no existe.</p>';
     }
-
 }
 
 function getPage(page) {
@@ -52,7 +50,8 @@ function getPage(page) {
 }
 
 function isAuthenticated() {
-    return true; 
+    const user = localStorage.getItem('user');
+    return user ? true : false;
 }
 
 window.addEventListener('DOMContentLoaded', router);
